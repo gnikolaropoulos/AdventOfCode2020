@@ -29,6 +29,14 @@ def elegantly_solve_part_1(puzzle_input):
     return x * y
 
 
+def elegantly_solve_part_2(puzzle_input):
+    for i in range(0, len(puzzle_input) - 2):
+        diff = 2020 - puzzle_input[i]
+        results = find_sum_of_two(diff, puzzle_input[: i + 1])
+        if results:
+            return results[0] * results[1] * puzzle_input[i]
+
+
 def get_puzzle_input():
     puzzle_input = []
     with open("input.txt") as input_txt:
@@ -48,4 +56,6 @@ if __name__ == "__main__":
 
     # more elegant solutions
     elegant_answer_1 = elegantly_solve_part_1(puzzle_input)
-    print(f"Part 1 (elegant): {answer_1}")
+    print(f"Part 1 (elegant): {elegant_answer_1}")
+    elegant_answer_2 = elegantly_solve_part_2(puzzle_input)
+    print(f"Part 1 (elegant): {elegant_answer_2}")

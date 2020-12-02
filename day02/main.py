@@ -1,6 +1,7 @@
 import re
 
-LINE_RE = re.compile("""
+LINE_RE = re.compile(
+    """
     ^
     ([0-9]+)
     -
@@ -10,7 +11,9 @@ LINE_RE = re.compile("""
     :[ ]
     ([a-z]+)
     $
-""", re.X)
+""",
+    re.X,
+)
 
 
 def solve_part_1(puzzle_input):
