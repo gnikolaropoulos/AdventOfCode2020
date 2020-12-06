@@ -79,6 +79,8 @@ def get_puzzle_input():
                 passport = []
             else:
                 passport.append(line.split())
+
+        passports.append(passport)
     return passports
 
 
