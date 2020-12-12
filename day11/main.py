@@ -4,42 +4,48 @@ grid_rows = 99
 grid_columns = 90
 
 
-def are_grids_equal(grid, newgrid):
-    for i in range(grid_rows):
-        for j in range(grid_columns):
-            if grid[i][j] == newgrid[i][j]:
-                continue
-            else:
-                return False
-    return True
-
-
 def arrange(i, j, grid, newgrid, steps_allowed, occupied_seats_limit):
     empty_seats_around = 0
     # look up
     next_row = i - 1
-    while 0 <= next_row < grid_rows and grid[next_row][j] == "." and abs(next_row - i) < steps_allowed:
+    while (
+        0 <= next_row < grid_rows
+        and grid[next_row][j] == "."
+        and abs(next_row - i) < steps_allowed
+    ):
         next_row -= 1
     if 0 <= next_row < grid_rows and grid[next_row][j] == "#":
         empty_seats_around += 1
 
     # look down
     next_row = i + 1
-    while 0 <= next_row < grid_rows and grid[next_row][j] == "." and abs(next_row - i) < steps_allowed:
+    while (
+        0 <= next_row < grid_rows
+        and grid[next_row][j] == "."
+        and abs(next_row - i) < steps_allowed
+    ):
         next_row += 1
     if 0 <= next_row < grid_rows and grid[next_row][j] == "#":
         empty_seats_around += 1
 
     # look left
     next_column = j - 1
-    while 0 <= next_column < grid_columns and grid[i][next_column] == "." and abs(next_column - j) < steps_allowed:
+    while (
+        0 <= next_column < grid_columns
+        and grid[i][next_column] == "."
+        and abs(next_column - j) < steps_allowed
+    ):
         next_column -= 1
     if 0 <= next_column < grid_columns and grid[i][next_column] == "#":
         empty_seats_around += 1
 
     # look right
     next_column = j + 1
-    while 0 <= next_column < grid_columns and grid[i][next_column] == "." and abs(next_column - j) < steps_allowed:
+    while (
+        0 <= next_column < grid_columns
+        and grid[i][next_column] == "."
+        and abs(next_column - j) < steps_allowed
+    ):
         next_column += 1
     if 0 <= next_column < grid_columns and grid[i][next_column] == "#":
         empty_seats_around += 1
@@ -47,41 +53,77 @@ def arrange(i, j, grid, newgrid, steps_allowed, occupied_seats_limit):
     # look up and left
     next_row = i - 1
     next_column = j - 1
-    while 0 <= next_row < grid_rows and 0 <= next_column < grid_columns and grid[next_row][next_column] == "." \
-            and abs(next_row - 1) < steps_allowed and abs(next_column - 1) < steps_allowed:
+    while (
+        0 <= next_row < grid_rows
+        and 0 <= next_column < grid_columns
+        and grid[next_row][next_column] == "."
+        and abs(next_row - 1) < steps_allowed
+        and abs(next_column - 1) < steps_allowed
+    ):
         next_row -= 1
         next_column -= 1
-    if 0 <= next_row < grid_rows and 0 <= next_column < grid_columns and grid[next_row][next_column] == "#":
+    if (
+        0 <= next_row < grid_rows
+        and 0 <= next_column < grid_columns
+        and grid[next_row][next_column] == "#"
+    ):
         empty_seats_around += 1
 
     # look up and right
     next_row = i - 1
     next_column = j + 1
-    while 0 <= next_row < grid_rows and 0 <= next_column < grid_columns and grid[next_row][next_column] == "." \
-            and abs(next_row - 1) < steps_allowed and abs(next_column - 1) < steps_allowed:
+    while (
+        0 <= next_row < grid_rows
+        and 0 <= next_column < grid_columns
+        and grid[next_row][next_column] == "."
+        and abs(next_row - 1) < steps_allowed
+        and abs(next_column - 1) < steps_allowed
+    ):
         next_row -= 1
         next_column += 1
-    if 0 <= next_row < grid_rows and 0 <= next_column < grid_columns and grid[next_row][next_column] == "#":
+    if (
+        0 <= next_row < grid_rows
+        and 0 <= next_column < grid_columns
+        and grid[next_row][next_column] == "#"
+    ):
         empty_seats_around += 1
 
     # look down and left
     next_row = i + 1
     next_column = j - 1
-    while 0 <= next_row < grid_rows and 0 <= next_column < grid_columns and grid[next_row][next_column] == "." \
-            and abs(next_row - 1) < steps_allowed and abs(next_column - 1) < steps_allowed:
+    while (
+        0 <= next_row < grid_rows
+        and 0 <= next_column < grid_columns
+        and grid[next_row][next_column] == "."
+        and abs(next_row - 1) < steps_allowed
+        and abs(next_column - 1) < steps_allowed
+    ):
         next_row += 1
         next_column -= 1
-    if 0 <= next_row < grid_rows and 0 <= next_column < grid_columns and grid[next_row][next_column] == "#":
+    if (
+        0 <= next_row < grid_rows
+        and 0 <= next_column < grid_columns
+        and grid[next_row][next_column] == "#"
+    ):
         empty_seats_around += 1
 
     # look down and right
     next_row = i + 1
     next_column = j + 1
-    while 0 <= next_row < grid_rows and 0 <= next_column < grid_columns and grid[next_row][next_column] == "." \
-            and abs(next_row - 1) < steps_allowed and abs(next_column - 1) < steps_allowed:
+    while (
+        0 <= next_row < grid_rows
+        and 0 <= next_column < grid_columns
+        and grid[next_row][next_column] == "."
+        and abs(next_row - 1) < steps_allowed
+        and abs(next_column - 1) < steps_allowed
+    ):
         next_row += 1
         next_column += 1
-    if 0 <= next_row < grid_rows and 0 <= next_column < grid_columns and grid[next_row][next_column] == "#":
+    if (
+        0 <= next_row < grid_rows
+        and 0 <= next_column < grid_columns
+        and grid[next_row][next_column] == "#"
+    ):
         empty_seats_around += 1
 
     if grid[i][j] == "L" and empty_seats_around == 0:
@@ -108,7 +150,7 @@ def pretty_print(grid):
 
 
 def solve_part_1(grid):
-    newgrid = [[''] * grid_columns for _ in range(grid_rows)]
+    newgrid = [[""] * grid_columns for _ in range(grid_rows)]
     while True:
         for i in range(grid_rows):
             for j in range(grid_columns):
@@ -117,16 +159,16 @@ def solve_part_1(grid):
                 else:
                     newgrid[i][j] = grid[i][j]
         # pretty_print(newgrid)
-        if are_grids_equal(grid, newgrid):
+        if grid == newgrid:
             break
         grid = copy.deepcopy(newgrid)
-        newgrid = [[''] * grid_columns for _ in range(grid_rows)]
+        newgrid = [[""] * grid_columns for _ in range(grid_rows)]
 
     return count_occupied_seats(newgrid)
 
 
 def solve_part_2(grid):
-    newgrid = [[''] * grid_columns for _ in range(grid_rows)]
+    newgrid = [[""] * grid_columns for _ in range(grid_rows)]
     while True:
         for i in range(grid_rows):
             for j in range(grid_columns):
@@ -135,16 +177,16 @@ def solve_part_2(grid):
                 else:
                     newgrid[i][j] = grid[i][j]
         # pretty_print(newgrid)
-        if are_grids_equal(grid, newgrid):
+        if grid == newgrid:
             break
         grid = copy.deepcopy(newgrid)
-        newgrid = [[''] * grid_columns for _ in range(grid_rows)]
+        newgrid = [[""] * grid_columns for _ in range(grid_rows)]
 
     return count_occupied_seats(newgrid)
 
 
 def get_puzzle_input():
-    puzzle_input = [[''] * grid_columns for _ in range(grid_rows)]
+    puzzle_input = [[""] * grid_columns for _ in range(grid_rows)]
     i = 0
     with open("input.txt") as input_txt:
         for line in input_txt:
