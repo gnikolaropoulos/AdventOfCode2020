@@ -3,7 +3,7 @@ def solve_part_1(timestamp, buses):
     while True:
         for buss in buses.values():
             if buss != 0:
-                if (timestamp+waiting) % buss == 0:
+                if (timestamp + waiting) % buss == 0:
                     return waiting * buss
         waiting += 1
 
@@ -25,8 +25,6 @@ def solve_part_2(buses):
     return time
 
 
-
-
 def get_puzzle_input():
     timestamp = 0
     buses = {}
@@ -38,11 +36,8 @@ def get_puzzle_input():
                 i += 1
             else:
                 for buss in line.strip().split(","):
-                    # if buss == "x":
-                    #     busses[i] = 0
                     if buss.isdigit():
-                        buses[i-1] = int(buss)
-                      #  busses.append(int(buss))
+                        buses[i - 1] = int(buss)
                     i += 1
     return timestamp, buses
 
