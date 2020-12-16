@@ -14,7 +14,10 @@ def solve_part_1(fields, tickets):
             for field in fields:
                 limits = fields[field]
                 if len(fields[field]) == 4:
-                    if limits[-4] <= number <= limits[-3] or limits[-2] <= number <= limits[-1]:
+                    if (
+                        limits[-4] <= number <= limits[-3]
+                        or limits[-2] <= number <= limits[-1]
+                    ):
                         found = True
                 elif len(fields[field]) == 2:
                     if limits[-2] <= number <= limits[-1]:
@@ -24,7 +27,7 @@ def solve_part_1(fields, tickets):
     return sum(out_of_limits)
 
 
-def solve_part_2(fields,myticket,tickets):
+def solve_part_2(fields, myticket, tickets):
     valid_tickets = []
     for ticket in tickets:
         all_found = True
@@ -34,7 +37,10 @@ def solve_part_2(fields,myticket,tickets):
             for field in fields:
                 limits = fields[field]
                 if len(fields[field]) == 4:
-                    if limits[-4] <= number <= limits[-3] or limits[-2] <= number <= limits[-1]:
+                    if (
+                        limits[-4] <= number <= limits[-3]
+                        or limits[-2] <= number <= limits[-1]
+                    ):
                         found = True
                 elif len(fields[field]) == 2:
                     if limits[-2] <= number <= limits[-1]:
@@ -55,28 +61,35 @@ def solve_part_2(fields,myticket,tickets):
                 number = numbers[index]
                 limits = fields[name]
                 if len(limits) == 4:
-                    if not (limits[-4] <= number <= limits[-3] or limits[-2] <= number <= limits[-1]):
+                    if not (
+                        limits[-4] <= number <= limits[-3]
+                        or limits[-2] <= number <= limits[-1]
+                    ):
                         valid_fields[name].remove(index)
                         break
                 elif len(limits) == 2:
                     if not limits[-2] <= number <= limits[-1]:
                         valid_fields[name].remove(index)
                         break
-    decided = set()
 
+    positions_taken = set()
     while any(len(indices) > 1 for indices in valid_fields.values()):
-        for k, v in valid_fields.items():
-            if len(v - decided) == 1:
-                valid_fields[k] -= decided
-                decided |= valid_fields[k]
+        for field, positions in valid_fields.items():
+            if len(positions - positions_taken) == 1:
+                valid_fields[field] -= positions_taken
+                positions_taken |= valid_fields[field]
 
-    departures = [position for k, v in valid_fields.items() for position in v if 'departure' in k]
+    departure_fields = [
+        position
+        for name, positions in valid_fields.items()
+        for position in positions
+        if "departure" in name
+    ]
+    result = 1
+    for departure in departure_fields:
+        result *= int(myticket[departure])
 
-    val = 1
-    for dep in departures:
-        val *= int(myticket[dep])
-
-    return val
+    return result
 
 
 def get_puzzle_input():
@@ -88,7 +101,12 @@ def get_puzzle_input():
         for line in input_txt:
             if double_field_re.match(line.strip()):
                 match = double_field_re.match(line.strip())
-                fields[match.group(1)] = [int(match.group(2)), int(match.group(3)), int(match.group(4)), int(match.group(5))]
+                fields[match.group(1)] = [
+                    int(match.group(2)),
+                    int(match.group(3)),
+                    int(match.group(4)),
+                    int(match.group(5)),
+                ]
             elif field_re.match(line.strip()):
                 match = field_re.match(line.strip())
                 fields[match.groups(1)] = [match.groups(2), match.groups(3)]
@@ -105,12 +123,11 @@ def get_puzzle_input():
     return fields, myticket, tickets
 
 
-
 if __name__ == "__main__":
     fields, myticket, tickets = get_puzzle_input()
 
     answer_1 = solve_part_1(fields, tickets)
     print(f"Part 1: {answer_1}")
 
-    answer_2 = solve_part_2(fields,myticket,tickets)
+    answer_2 = solve_part_2(fields, myticket, tickets)
     print(f"Part 2: {answer_2}")
