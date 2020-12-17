@@ -1,8 +1,7 @@
 import re
 from collections import defaultdict
 
-double_field_re = re.compile("^([\w\s]+):\s(\d+)-(\d+) or (\d+)\-(\d+)$")
-field_re = re.compile("^([\w\s]+):\s(\d+)-(\d+)$")
+rule_re = re.compile("^([\w\s]+):\s(\d+)-(\d+) or (\d+)\-(\d+)$")
 
 
 def solve_part_1(fields, tickets):
@@ -18,9 +17,6 @@ def solve_part_1(fields, tickets):
                         limits[-4] <= number <= limits[-3]
                         or limits[-2] <= number <= limits[-1]
                     ):
-                        found = True
-                elif len(fields[field]) == 2:
-                    if limits[-2] <= number <= limits[-1]:
                         found = True
             if not found:
                 out_of_limits.append(number)
@@ -85,6 +81,7 @@ def solve_part_2(fields, myticket, tickets):
         for position in positions
         if "departure" in name
     ]
+
     result = 1
     for departure in departure_fields:
         result *= int(myticket[departure])
@@ -99,17 +96,14 @@ def get_puzzle_input():
     is_mine = False
     with open("input.txt") as input_txt:
         for line in input_txt:
-            if double_field_re.match(line.strip()):
-                match = double_field_re.match(line.strip())
+            if rule_re.match(line.strip()):
+                match = rule_re.match(line.strip())
                 fields[match.group(1)] = [
                     int(match.group(2)),
                     int(match.group(3)),
                     int(match.group(4)),
                     int(match.group(5)),
                 ]
-            elif field_re.match(line.strip()):
-                match = field_re.match(line.strip())
-                fields[match.groups(1)] = [match.groups(2), match.groups(3)]
             elif "your ticket" in line.strip():
                 is_mine = True
             elif "nearby" in line.strip():
