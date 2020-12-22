@@ -14,4 +14,5 @@ name="$(printf "day%02d" "$1")"
 mkdir "$name"
 
 touch "$name"/input.txt
+touch "$name"/testinput.txt
 touch "$name"/main.py
