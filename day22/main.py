@@ -17,7 +17,6 @@ def get_puzzle_input():
 
 
 def solve_part_1(decks):
-    print(decks)
     end = False
     while not end:
         player1 = decks[0][0]
@@ -35,15 +34,11 @@ def solve_part_1(decks):
         if len(decks[0]) == 0 or len(decks[1]) == 0:
             end = True
 
-    result = 0
-    if len(decks[1]) > 0:
-        for i in reversed(range(len(decks[1]))):
-            result += decks[1][i] * (len(decks[1]) - i)
-    else:
-        for i in reversed(range(len(decks[0]))):
-            result += decks[0][i] * (len(decks[0]) - i)
+    winner = 0
+    if decks[1]:
+        winner = 1
 
-    return result
+    return sum(card * (len(decks[winner]) - i) for i, card in enumerate(decks[winner]))
 
 
 def play_recursive(player1, player2):
@@ -81,8 +76,8 @@ def solve_part_2(decks):
     player1 = deque(decks[0])
     player2 = deque(decks[1])
 
-    w, pw = play_recursive(player1, player2)
-    return sum(e * (len(pw) - i) for i, e in enumerate(pw))
+    _, winner_deck = play_recursive(player1, player2)
+    return sum(card * (len(winner_deck) - i) for i, card in enumerate(winner_deck))
 
 
 if __name__ == "__main__":
